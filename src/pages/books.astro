@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Books by Gil Gatson"
+  description="Explore books by Gil Gatson on technology, geopolitics, and entrepreneurship."
+>
+  <div class="container">
+    <h1>Books</h1>
+    
+    <section class="book-section" id="ai-delusion">
+      <div class="book-display">
+        <div class="book-cover">
+          <img src="/covers/ai-delusion.jpg" alt="THE AI DELUSION book cover" width="300" height="450" />
+        </div>
+        <div class="book-details">
+          <h2>THE AI DELUSION</h2>
+          <p class="subtitle">The Brutal Truth About America's AI Future</p>
+          
+          <div class="book-meta">
+            <span>📖 160 pages</span>
+            <span>🎧 7.9 hours</span>
+            <span>📅 2025</span>
+          </div>
+          
+          <div class="description">
+            <p>
+              Is America's AI leadership a dangerous illusion? While America celebrates its AI prowess, a dangerous delusion has taken hold. 
+              The prevailing narrative of untouchable technological dominance is a mirage, masking a brutal truth about the real state of the global AI race.
+            </p>
+            <p>
+              In THE AI DELUSION, Gil Gatson pulls back the curtain on the critical vulnerabilities threatening America's future. 
+              He exposes the five strategic bottlenecks Washington isn't talking about, the open-source trap that inadvertently aids our chief rival, 
+              and how China is leveraging its manufacturing muscle and disciplined national strategy to gain a powerful asymmetric advantage.
+            </p>
+            <p>
+              This isn't just about algorithms. It's a battle for economic, military, and cultural supremacy. Gatson dissects the real battlegrounds, 
+              from the hard constraints of energy to the global war for talent, and provides a clear-eyed analysis of what we stand to lose. 
+              More than a warning, this book is a strategic roadmap for the industrial and cultural renewal America must undertake to secure its place as the world's leader and win the AI-driven future.
+            </p>
+          </div>
+          
+          <div class="buy-links">
+            <a href="https://www.amazon.com/dp/YOUR_KINDLE_ASIN" class="btn btn-primary">Kindle - $9.99</a>
+            <a href="https://www.amazon.com/dp/YOUR_PAPERBACK_ASIN" class="btn btn-primary">Paperback - $19.99</a>
+            <a href="https://www.audible.com/pd/YOUR_AUDIOBOOK_ASIN" class="btn btn-primary">Audiobook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <hr />
+    
+    <section class="series-section">
+      <h2>Side Hustle Launchpad Series</h2>
+      <p class="series-intro">Practical guides to building profitable online businesses from scratch.</p>
+      
+      <div class="books-grid">
+        <div class="book-card" id="tiktok-shop">
+          <h3>The TikTok Shop Launchpad</h3>
+          <p class="book-tagline">Launch in 30 Days: Your Complete Blueprint to TikTok Shop Success</p>
+          <p>
+            A step-by-step guide to building a profitable TikTok Shop business in 30 days. 
+            Learn product selection, content creation, fulfillment, and scaling strategies from someone who's done it.
+          </p>
+          <div class="book-meta">
+            <span>📖 5.5 hours</span>
+            <span>📅 2024</span>
+          </div>
+          <div class="buy-links">
+            <a href="https://www.amazon.com/dp/YOUR_TIKTOK_KINDLE" class="btn">Kindle</a>
+            <a href="https://www.audible.com/pd/YOUR_TIKTOK_AUDIO" class="btn">Audiobook</a>
+          </div>
+        </div>
+        
+        <div class="book-card" id="amazon-kdp">
+          <h3>Amazon KDP for Beginners</h3>
+          <p class="book-tagline">Publish in a Weekend: Your Step-by-Step Blueprint to Write, Publish, and Profit from Your First Book in Just 3 Days</p>
+          <p>
+            Everything you need to write, format, publish, and market your first book on Amazon KDP in a single weekend. 
+            No prior experience required.
+          </p>
+          <div class="book-meta">
+            <span>📖 2.9 hours</span>
+            <span>📅 2024</span>
+          </div>
+          <div class="buy-links">
+            <a href="https://www.amazon.com/dp/YOUR_KDP_KINDLE" class="btn">Kindle</a>
+            <a href="https://www.audible.com/pd/YOUR_KDP_AUDIO" class="btn">Audiobook</a>
+          </div>
+        </div>
+        
+        <div class="book-card" id="etsy">
+          <h3>The Etsy Launchpad</h3>
+          <p class="book-tagline">Build Your Profitable Etsy Business from Scratch</p>
+          <p>
+            A comprehensive guide to starting and scaling an Etsy business. 
+            Learn product research, listing optimization, marketing, and customer service strategies that work.
+          </p>
+          <div class="book-meta">
+            <span>📖 Coming Soon</span>
+            <span>📅 2025</span>
+          </div>
+          <div class="buy-links">
+            <span class="btn btn-disabled">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <style>
+    h1 {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .book-section {
+      margin-bottom: 4rem;
+    }
+    
+    .book-display {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    
+    .book-cover img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .book-details h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--color-gray);
+      margin-bottom: 1.5rem;
+    }
+    
+    .book-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--color-gray);
+      font-size: 0.875rem;
+    }
+    
+    .description p {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+    
+    .buy-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--color-accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    
+    .btn:hover {
+      background: #1d4ed8;
+    }
+    
+    .btn-primary {
+      background: var(--color-accent);
+    }
+    
+    .btn-disabled {
+      background: var(--color-gray);
+      cursor: not-allowed;
+    }
+    
+    hr {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 4rem 0;
+    }
+    
+    .series-section {
+      margin-top: 4rem;
+    }
+    
+    .series-section h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    
+    .series-intro {
+      text-align: center;
+      color: var(--color-gray);
+      margin-bottom: 3rem;
+      font-size: 1.125rem;
+    }
+    
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .book-card {
+      padding: 2rem;
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+    }
+    
+    .book-card h3 {
+      margin-bottom: 0.5rem;
+    }
+    
+    .book-tagline {
+      font-size: 0.875rem;
+      color: var(--color-gray);
+      margin-bottom: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      .book-display {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .book-cover {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      
+      .books-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>

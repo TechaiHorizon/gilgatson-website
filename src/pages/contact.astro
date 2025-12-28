@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Contact Gil Gatson"
+  description="Get in touch with Gil Gatson for speaking engagements, consulting inquiries, or media requests."
+>
+  <div class="container">
+    <article class="contact-content">
+      <h1>Contact</h1>
+      
+      <div class="intro">
+        <p>
+          For speaking engagements, consulting inquiries, media requests, or general questions, 
+          please reach out using the information below.
+        </p>
+      </div>
+      
+      <div class="contact-methods">
+        <div class="contact-card">
+          <h2>📧 Email</h2>
+          <p>
+            <a href="mailto:contact@gilgatson.com">contact@gilgatson.com</a>
+          </p>
+          <p class="note">Please allow 2-3 business days for a response.</p>
+        </div>
+        
+        <div class="contact-card">
+          <h2>🔗 Connect</h2>
+          <ul class="social-links">
+            <li><a href="https://www.amazon.com/stores/Gil-Gatson/author/B0DQXXX" target="_blank">Amazon Author Page</a></li>
+            <li><a href="https://www.linkedin.com/in/gilgatson" target="_blank">LinkedIn</a></li>
+            <li><a href="https://twitter.com/gilgatson" target="_blank">Twitter/X</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <section class="inquiries">
+        <h2>Speaking & Media</h2>
+        <p>
+          Gil is available for speaking engagements, podcast interviews, and media appearances on topics including:
+        </p>
+        <ul>
+          <li>AI and technological competition</li>
+          <li>US-China geopolitical dynamics</li>
+          <li>Industrial policy and manufacturing strategy</li>
+          <li>Business strategy in rapidly changing markets</li>
+          <li>Entrepreneurship and online business building</li>
+        </ul>
+        <p>
+          Please include details about your event, audience, and preferred topics in your inquiry.
+        </p>
+      </section>
+      
+      <section class="newsletter">
+        <h2>📬 Stay Updated</h2>
+        <p>
+          Subscribe to receive updates on new books, articles, and insights on technology, geopolitics, and business strategy.
+        </p>
+        <div class="newsletter-form">
+          <p class="note">Newsletter signup coming soon. Follow on social media for updates.</p>
+        </div>
+      </section>
+    </article>
+  </div>
+
+  <style>
+    .contact-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .intro {
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 1.125rem;
+      line-height: 1.8;
+    }
+    
+    .contact-methods {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .contact-card {
+      padding: 2rem;
+      background: #f9fafb;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+    }
+    
+    .contact-card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .contact-card a {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+    
+    .note {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--color-gray);
+    }
+    
+    .social-links {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .social-links li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .social-links a {
+      font-weight: 600;
+      text-decoration: none;
+    }
+    
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+    
+    section {
+      margin-bottom: 3rem;
+    }
+    
+    .inquiries ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .inquiries li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+    
+    .newsletter {
+      padding: 2rem;
+      background: #f9fafb;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .newsletter h2 {
+      margin-bottom: 1rem;
+    }
+    
+    .newsletter-form {
+      margin-top: 1.5rem;
+    }
+  </style>
+</BaseLayout>

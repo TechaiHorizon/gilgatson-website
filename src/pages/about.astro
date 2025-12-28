@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="About Gil Gatson"
+  description="Learn more about Gil Gatson, entrepreneur, business strategist, and author specializing in technology, geopolitics, and industrial policy."
+>
+  <div class="container">
+    <article class="about-content">
+      <h1>About Gil Gatson</h1>
+      
+      <div class="intro">
+        <p class="lead">
+          Gil Gatson is an entrepreneur, business strategist, and author specializing in technology, geopolitics, and industrial policy.
+        </p>
+      </div>
+      
+      <section>
+        <h2>Background</h2>
+        <p>
+          Gil's work sits at the intersection of business strategy, technological innovation, and global competition. 
+          Through his writing and consulting, he helps organizations and individuals navigate the complexities of the 21st-century global economy.
+        </p>
+        <p>
+          His analysis focuses on the material realities that underpin technological progress: energy infrastructure, manufacturing capacity, 
+          supply chain resilience, and industrial policy. He brings a contrarian perspective to conventional wisdom about AI, technology leadership, 
+          and American competitiveness.
+        </p>
+      </section>
+      
+      <section>
+        <h2>Areas of Expertise</h2>
+        <ul class="expertise-list">
+          <li><strong>Technology & Geopolitics:</strong> Analysis of global technology competition, particularly the US-China AI race</li>
+          <li><strong>Industrial Policy:</strong> Strategic frameworks for manufacturing, energy, and supply chain resilience</li>
+          <li><strong>Business Strategy:</strong> Helping organizations build competitive advantages in rapidly changing markets</li>
+          <li><strong>Entrepreneurship:</strong> Practical guidance for building and scaling online businesses</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2>Published Works</h2>
+        <p>
+          Gil is the author of <strong>THE AI DELUSION: The Brutal Truth About America's AI Future</strong>, 
+          a critical examination of America's position in the global AI race. The book challenges the prevailing narrative of American AI dominance 
+          and presents a strategic roadmap for maintaining technological leadership.
+        </p>
+        <p>
+          He is also the creator of the <strong>Side Hustle Launchpad Series</strong>, practical guides that help aspiring entrepreneurs 
+          build profitable online businesses on platforms like TikTok Shop, Amazon KDP, and Etsy.
+        </p>
+      </section>
+      
+      <section>
+        <h2>Get in Touch</h2>
+        <p>
+          For speaking engagements, consulting inquiries, or media requests, please visit the <a href="/contact">contact page</a>.
+        </p>
+      </section>
+    </article>
+  </div>
+
+  <style>
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .intro {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+    
+    .lead {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: var(--color-text);
+    }
+    
+    section {
+      margin-bottom: 3rem;
+    }
+    
+    h2 {
+      margin-bottom: 1rem;
+      color: var(--color-text);
+    }
+    
+    p {
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    
+    .expertise-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .expertise-list li {
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      background: #f9fafb;
+      border-left: 3px solid var(--color-accent);
+      border-radius: 4px;
+    }
+    
+    .expertise-list strong {
+      color: var(--color-accent);
+    }
+  </style>
+</BaseLayout>

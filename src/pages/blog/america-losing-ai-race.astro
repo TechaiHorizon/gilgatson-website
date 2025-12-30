@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Why America Is Losing the AI Race to China - Gil Gatson"
+  description="In 2025, the AI contest is not about who drops the flashiest frontier model. It is about who can scale it, power it, staff it, and deploy it into real economic and military leverage."
+>
+  <div class="container">
+    <article class="blog-post">
+      <header class="post-header">
+        <h1>Why America Is Losing the AI Race to China</h1>
+        <p class="byline">By Gil Gatson</p>
+        <p class="date">December 29, 2024</p>
+      </header>
+
+      <div class="post-content">
+        <p class="lede">
+          In 2025, the AI contest is not about who drops the flashiest frontier model. It is about who can scale it, power it, staff it, and deploy it into real economic and military leverage. America still leads on frontier capability. But momentum is shifting because China is winning the compounding game: open-weight distribution, electricity capacity, and coordinated deployment.
+        </p>
+
+        <h2>Open-weight momentum: China ships, America centralizes</h2>
+        <p>
+          China has leaned into open or open-weight releases that spread fast through the developer stack. DeepSeek's R1 landed in January 2025. Alibaba followed with Qwen 2.5-Max, publicly claiming it outperformed GPT-4o, DeepSeek-V3, and Llama on multiple benchmarks. Moonshot added Kimi K2 as an open-source release in July 2025. The ecosystem effect is measurable: Stanford HAI and DigiChina reported that in September 2025 the Qwen family surpassed Llama as the most downloaded LLM family on Hugging Face, and that Chinese open-model developers slightly surpassed U.S. developers in overall Hugging Face downloads over the prior year.
+        </p>
+
+        <h2>Energy: the hard ceiling on compute</h2>
+        <p>
+          AI runs on electricity. The IEA projects global data center electricity demand will more than double by 2030 to about 945 TWh, with AI the biggest driver. IEA-linked reporting also notes U.S. data centers could account for roughly half of U.S. electricity demand growth by 2030. China's scale advantage is not abstract: credible analyses describe China as producing more than twice as much electricity as the United States. Nvidia CEO Jensen Huang recently put U.S. data center construction at about three years, contrasting it with China's speed. When compute becomes a race for kilowatt-hours, build speed becomes strategy.
+        </p>
+
+        <h2>Talent and self-reliance: restrictions boomerang</h2>
+        <p>
+          MacroPolo's AI Talent Tracker shows China producing about 47% of the world's top AI researchers (2022), up sharply from 2019. Morgan Stanley argues China also holds more than half of global AI patents. Meanwhile, export controls may slow China near-term but also accelerate domestic substitution and a self-reliance mindset.
+        </p>
+
+        <h2>Deployment wins wars</h2>
+        <p>
+          Benchmarks are marketing; deployment is power. A clean proxy is factory automation: the International Federation of Robotics reports China installed about 295,000 industrial robots in 2024, almost nine times the United States, and accounted for 54% of global deployments. That capital formation compounds into faster iteration, more data, and tighter integration of AI into manufacturing and logistics.
+        </p>
+
+        <h2>Bottom line</h2>
+        <p>
+          America can still win, but not by debating its way to dominance. The U.S. needs a build agenda: faster permitting, grid expansion plus firm power, and an immigration system that actively recruits elite technical talent. It also needs a more intentional approach to open models and developer distribution, so the ecosystem does not consolidate elsewhere.
+        </p>
+
+        <div class="post-footer">
+          <p><strong>About the author:</strong> Gil Gatson is an engineer and author focused on technology, geopolitics, and industrial strategy. His latest book, <a href="/books">THE AI DELUSION</a>, explores the brutal truth about America's AI future.</p>
+        </div>
+      </div>
+
+      <nav class="post-nav">
+        <a href="/blog" class="back-link">← Back to Blog</a>
+      </nav>
+    </article>
+  </div>
+
+  <style>
+    .blog-post {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .post-header {
+      margin-bottom: 3rem;
+      border-bottom: 2px solid var(--color-border);
+      padding-bottom: 2rem;
+    }
+    
+    .post-header h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    
+    .byline {
+      font-size: 1.125rem;
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+    }
+    
+    .date {
+      color: var(--color-gray);
+      font-size: 0.875rem;
+    }
+    
+    .post-content {
+      font-size: 1.125rem;
+      line-height: 1.8;
+    }
+    
+    .lede {
+      font-size: 1.25rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      color: var(--color-text);
+      font-weight: 500;
+    }
+    
+    .post-content h2 {
+      font-size: 1.75rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--color-text);
+    }
+    
+    .post-content p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .post-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
+      background: #f9fafb;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+    
+    .post-footer p {
+      margin: 0;
+      font-size: 1rem;
+    }
+    
+    .post-nav {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
+    }
+    
+    .back-link {
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 768px) {
+      .post-header h1 {
+        font-size: 2rem;
+      }
+      
+      .post-content {
+        font-size: 1rem;
+      }
+      
+      .lede {
+        font-size: 1.125rem;
+      }
+    }
+  </style>
+</BaseLayout>

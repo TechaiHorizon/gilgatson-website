@@ -16,10 +16,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="blog-grid">
       <article class="blog-card">
         <h2><a href="/blog/america-losing-ai-race">Why America Is Losing the AI Race to China</a></h2>
-        <p class="meta">Coming Soon</p>
+        <p class="meta">December 29, 2024</p>
         <p>
-          An analysis of the five strategic bottlenecks strangling American AI development and how China is gaining ground through disciplined industrial strategy.
+          In 2025, the AI contest is not about who drops the flashiest frontier model. It is about who can scale it, power it, staff it, and deploy it. China is winning the compounding game: open-weight distribution, electricity capacity, and coordinated deployment.
         </p>
+        <a href="/blog/america-losing-ai-race" class="read-more">Read more →</a>
       </article>
       
       <article class="blog-card">
@@ -93,6 +94,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       font-size: 0.875rem;
       color: var(--color-gray);
       margin-bottom: 1rem;
+    }
+    
+    .read-more {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .read-more:hover {
+      text-decoration: underline;
     }
     
     .coming-soon {

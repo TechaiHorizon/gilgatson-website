@@ -1,0 +1,59 @@
+---
+// Visitor counter with seed number
+const SEED_COUNT = 1247; // Starting number
+---
+
+<div class="visitor-counter">
+  <span class="counter-label">Visitors:</span>
+  <span class="counter-value" id="visitor-count">{SEED_COUNT}</span>
+</div>
+
+<script>
+  // Get or initialize visitor count
+  const SEED_COUNT = 1247;
+  const STORAGE_KEY = 'gilgatson_visitor_count';
+  const VISITED_KEY = 'gilgatson_visited';
+  
+  // Check if user has visited before
+  const hasVisited = localStorage.getItem(VISITED_KEY);
+  
+  // Get current count from localStorage or use seed
+  let currentCount = parseInt(localStorage.getItem(STORAGE_KEY) || SEED_COUNT);
+  
+  // Increment if new visitor
+  if (!hasVisited) {
+    currentCount++;
+    localStorage.setItem(VISITED_KEY, 'true');
+    localStorage.setItem(STORAGE_KEY, currentCount.toString());
+  }
+  
+  // Update display
+  const counterElement = document.getElementById('visitor-count');
+  if (counterElement) {
+    counterElement.textContent = currentCount.toLocaleString();
+  }
+</script>
+
+<style>
+  .visitor-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #f9fafb;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: var(--color-gray);
+    border: 1px solid #e5e7eb;
+  }
+  
+  .counter-label {
+    font-weight: 500;
+  }
+  
+  .counter-value {
+    font-weight: 700;
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

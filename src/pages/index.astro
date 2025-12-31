@@ -1,16 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
+import VisitorCounter from '../components/VisitorCounter.astro';
+---
 
 <BaseLayout 
   title="Gil Gatson - Entrepreneur, Business Strategist, and Author"
-  description="Engineer obsessed with tech, geopolitics & winning the industrial future. Semicon wars. AI dominance. No time for cope."
+  description="Entrepreneur obsessed with tech, geopolitics & winning the industrial future. Semicon wars. AI dominance. No time for cope."
 >
   <div class="container">
     <section class="hero">
       <h1>Gil Gatson</h1>
       <p class="subtitle">
-        Engineer obsessed with tech, geopolitics & winning the industrial future.<br>
+        Entrepreneur obsessed with tech, geopolitics & winning the industrial future.<br>
         Semicon wars. AI dominance. No time for cope.
       </p>
     </section>
@@ -62,6 +64,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
     </section>
+
+    <div class="counter-wrapper">
+      <VisitorCounter />
+    </div>
   </div>
 
   <style>
@@ -171,6 +177,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .book-item a {
       font-weight: 600;
       text-decoration: none;
+    }
+    
+    .counter-wrapper {
+      text-align: center;
+      margin-top: 3rem;
+      padding-bottom: 2rem;
     }
     
     @media (max-width: 768px) {

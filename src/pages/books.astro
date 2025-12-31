@@ -8,6 +8,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 >
   <div class="container">
     <h1>Books</h1>
+    <p class="page-intro">
+      Explore all books by Gil Gatson. Visit my <a href="https://www.amazon.com/author/gilgatson" target="_blank" rel="noopener noreferrer">Amazon Author Page</a> for the complete collection.
+    </p>
     
     <section class="book-section" id="ai-delusion">
       <div class="book-display">
@@ -113,7 +116,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <style>
     h1 {
       text-align: center;
+      margin-bottom: 1rem;
+    }
+    
+    .page-intro {
+      text-align: center;
+      color: var(--color-gray);
       margin-bottom: 3rem;
+      font-size: 1.125rem;
+    }
+    
+    .page-intro a {
+      font-weight: 600;
+      text-decoration: none;
     }
     
     .book-section {

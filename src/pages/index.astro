@@ -353,30 +353,31 @@ import VisitorCounter from '../components/VisitorCounter.astro';
   </style>
   
   <script>
-    // Fetch market data from Yahoo Finance API (via proxy)
+    // Fetch market data using Finnhub API (free tier: 60 calls/min)
+    const FINNHUB_API_KEY = 'ctguq29r01qn67a0l5d0ctguq29r01qn67a0l5dg'; // Demo key - replace with your own
+    
     async function fetchMarketData() {
       const symbols = {
-        'IXIC': '^IXIC',  // NASDAQ
-        'SPX': '^GSPC',   // S&P 500
-        'DJI': '^DJI',    // Dow Jones
-        'VIX': '^VIX'     // VIX
+        'IXIC': 'IXIC',  // NASDAQ Composite
+        'SPX': 'SPX',    // S&P 500
+        'DJI': 'DJI',    // Dow Jones
+        'VIX': 'VIX'     // VIX
       };
       
       for (const [key, symbol] of Object.entries(symbols)) {
         try {
-          // Using Yahoo Finance API via query
-          const response = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`);
+          const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`);
           const data = await response.json();
           
-          if (data.chart && data.chart.result && data.chart.result[0]) {
-            const result = data.chart.result[0];
-            const meta = result.meta;
-            const price = meta.regularMarketPrice;
-            const previousClose = meta.chartPreviousClose || meta.previousClose;
+          if (data && data.c && data.pc) {
+            const price = data.c;  // Current price
+            const previousClose = data.pc;  // Previous close
             const change = price - previousClose;
-            const changePercent = (change / previousClose) * 100;
+            const changePercent = data.dp || ((change / previousClose) * 100);  // Percent change
             
             updateMarketDisplay(key, price, change, changePercent);
+          } else {
+            displayError(key);
           }
         } catch (error) {
           console.error(`Error fetching ${key}:`, error);

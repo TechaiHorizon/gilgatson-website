@@ -1,0 +1,165 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    pubDate: string;
+    author: string;
+    image?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Format date for schema
+const publishDate = new Date(frontmatter.pubDate).toISOString();
+---
+
+<BaseLayout title={`${frontmatter.title} | Gil Gatson`} description={frontmatter.description} image={frontmatter.image}>
+  <div class="container">
+    <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+      <!-- Schema.org BlogPosting markup -->
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": frontmatter.title,
+        "description": frontmatter.description,
+        "author": {
+          "@type": "Person",
+          "name": frontmatter.author,
+          "url": "https://gilgatson.com/about"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Gil Gatson",
+          "url": "https://gilgatson.com"
+        },
+        "datePublished": publishDate,
+        "dateModified": publishDate,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": canonicalURL
+        },
+        "image": frontmatter.image ? new URL(frontmatter.image, Astro.site) : new URL('/og-image.jpg', Astro.site),
+        "url": canonicalURL
+      })} />
+      
+      <header class="post-header">
+        <h1 itemprop="headline">{frontmatter.title}</h1>
+        <div class="post-meta">
+          <span class="byline" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            By <span itemprop="name">{frontmatter.author}</span>
+          </span>
+          <time class="date" itemprop="datePublished" datetime={publishDate}>{frontmatter.pubDate}</time>
+          <meta itemprop="dateModified" content={publishDate} />
+        </div>
+      </header>
+
+      <div class="post-content" itemprop="articleBody">
+        <slot />
+      </div>
+    </article>
+  </div>
+
+  <style>
+    .blog-post {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .post-header {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    
+    .post-header h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      font-family: var(--font-serif);
+    }
+    
+    .post-meta {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      color: var(--color-gray);
+      font-size: 0.875rem;
+    }
+    
+    .post-content {
+      font-size: 1.125rem;
+      line-height: 1.8;
+    }
+    
+    .post-content h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.875rem;
+    }
+    
+    .post-content h3 {
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+    }
+    
+    .post-content p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .post-content a {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+    
+    .post-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+    }
+    
+    .post-content th,
+    .post-content td {
+      padding: 0.75rem;
+      border: 1px solid var(--color-border);
+      text-align: left;
+    }
+    
+    .post-content th {
+      background: #f9fafb;
+      font-weight: 600;
+    }
+    
+    .post-content blockquote {
+      border-left: 4px solid var(--color-accent);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+      font-style: italic;
+      color: var(--color-gray);
+    }
+    
+    .post-content ul,
+    .post-content ol {
+      margin-bottom: 1.5rem;
+      padding-left: 2rem;
+    }
+    
+    .post-content li {
+      margin-bottom: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .post-header h1 {
+        font-size: 2rem;
+      }
+      
+      .post-content {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</BaseLayout>

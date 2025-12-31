@@ -1,7 +1,8 @@
 ---
+layout: ../../layouts/BlogPostLayout.astro
 title: "The Unseen Handbrake: Why Energy, Not Talent, Is AI's Real Bottleneck"
 description: "Everyone is focused on algorithms and chips, but the brutal truth is that America's aging power grid is the single biggest threat to its AI dominance. Here's the data."
-pubDate: "Dec 31 2025"
+pubDate: "December 31, 2025"
 author: "Gil Gatson"
 ---
 
@@ -65,7 +66,7 @@ The numbers are staggering and paint a grim picture of the growing "electron gap
 
 In a single year, China added more than eight times the power capacity that the U.S. did. Their solar manufacturing capacity is nearly 40 times larger than America's. They are building a fleet of new nuclear reactors while the U.S. has built only two in the last 30 years.
 
-This is the result of a deliberate, centrally planned industrial strategy. China treats energy capacity as the absolute foundation of industrial competitiveness. They are aggressively deploying renewables for the future while expanding their coal fleet to ensure stability today. Their state-backed industrial ecosystem, which combines R&D subsidies, operational support, and consumer rebates, has allowed them to dominate every critical energy supply chain, from solar wafers to the specialized steel used in nuclear reactors [5].
+This is the result of a deliberate, centrally planned industrial strategy. China treats energy capacity as the absolute foundation of industrial competitiveness. They are aggressively deploying renewables for the future while expanding their coal fleet to ensure stability today. Their state-backed industrial ecosystem, which combines R&D subsidies, operational support, and consumer rebates, has allowed them to dominate every critical energy supply chain, from solar wafers to the specialized steel used in nuclear reactors [5]. This energy advantage is one of several key factors in [why America is losing the AI race to China](/blog/america-losing-ai-race).
 
 ## The Real-World Fallout
 

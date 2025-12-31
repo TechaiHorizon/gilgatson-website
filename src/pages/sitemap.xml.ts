@@ -6,6 +6,7 @@ export async function GET() {
     { url: 'blog', priority: '0.9', changefreq: 'weekly' },
     { url: 'blog/america-losing-ai-race', priority: '0.9', changefreq: 'monthly' },
     { url: 'blog/energy-the-real-bottleneck-for-ai', priority: '0.9', changefreq: 'monthly' },
+    { url: 'blog/the-open-source-trap', priority: '0.9', changefreq: 'monthly' },
     { url: 'contact', priority: '0.7', changefreq: 'monthly' },
   ];
   

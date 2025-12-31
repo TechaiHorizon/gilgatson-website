@@ -93,10 +93,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
       
       .logo {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--color-text);
+        display: flex;
+        align-items: center;
         text-decoration: none;
+      }
+      
+      .logo img {
+        height: 2rem;
+        width: auto;
       }
       
       nav {
@@ -168,7 +172,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body>
     <header>
       <div class="container">
-        <a href="/" class="logo">Gil Gatson</a>
+        <a href="/" class="logo">
+          <img src="/logo.png" alt="Gil Gatson" />
+        </a>
         <nav>
           <a href="/">Home</a>
           <a href="/books">Books</a>

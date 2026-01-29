@@ -43,26 +43,7 @@ import VisitorCounter from '../components/VisitorCounter.astro';
     </div>
   </section>
 
-  <!-- NASDAQ Widget -->
-  <section class="market-widget">
-    <div class="market-container">
-      <h2 class="market-title">Market Snapshot</h2>
-      <div class="market-single">
-        <div class="tradingview-widget-container">
-          <div class="tradingview-widget-container__widget"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-          {
-            "symbol": "NASDAQ:IXIC",
-            "width": "100%",
-            "isTransparent": true,
-            "colorTheme": "light",
-            "locale": "en"
-          }
-          </script>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <!-- Book Focus Section -->
   <section id="book" class="book-section">
@@ -321,31 +302,7 @@ import VisitorCounter from '../components/VisitorCounter.astro';
     color: var(--color-text-secondary);
   }
 
-  /* Market Widget */
-  .market-widget {
-    padding: 60px 0;
-    background: var(--color-bg-secondary);
-  }
 
-  .market-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  .market-title {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin-bottom: 24px;
-    text-align: center;
-  }
-
-  .market-single {
-    max-width: 600px;
-    margin: 0 auto;
-  }
 
   /* Book Section */
   .book-section {

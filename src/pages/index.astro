@@ -2,12 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import VisitorCounter from '../components/VisitorCounter.astro';
 
-// Get all blog posts and sort by date (newest first)
+// Get all blog posts
 const allPosts = await Astro.glob('../pages/blog/*.md');
-const sortedPosts = allPosts
-  .filter(post => post.frontmatter && post.frontmatter.pubDate)
+
+// Separate briefings from articles
+const briefings = allPosts
+  .filter(post => post.frontmatter && post.frontmatter.pubDate && post.frontmatter.title && post.frontmatter.title.includes('Daily Tech Briefing'))
   .sort((a, b) => new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime())
-  .slice(0, 4); // Get only the 4 most recent
+  .slice(0, 3); // Get 3 most recent briefings
+
+const articles = allPosts
+  .filter(post => post.frontmatter && post.frontmatter.pubDate && post.frontmatter.title && !post.frontmatter.title.includes('Daily Tech Briefing'))
+  .sort((a, b) => new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime())
+  .slice(0, 4); // Get 4 most recent articles
 ---
 
 <BaseLayout 
@@ -106,6 +113,27 @@ const sortedPosts = allPosts
     </div>
   </section>
 
+  <!-- Daily Briefings Section -->
+  <section class="briefings-section">
+    <div class="analysis-container">
+      <div class="section-header">
+        <h2>Daily Tech Briefings</h2>
+        <a href="/blog" class="view-all">View All →</a>
+      </div>
+      
+      <div class="briefings-grid">
+        {briefings.map(briefing => (
+          <article class="briefing-card">
+            <span class="card-date">{new Date(briefing.frontmatter.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <h3><a href={briefing.url}>{briefing.frontmatter.title}</a></h3>
+            <p>{briefing.frontmatter.description}</p>
+            <a href={briefing.url} class="card-link">Read briefing →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Latest Analysis Section -->
   <section class="analysis-section">
     <div class="analysis-container">
@@ -115,7 +143,7 @@ const sortedPosts = allPosts
       </div>
       
       <div class="analysis-grid">
-        {sortedPosts.map(post => (
+        {articles.map(post => (
           <article class="analysis-card">
             <span class="card-date">{new Date(post.frontmatter.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             <h3><a href={post.url}>{post.frontmatter.title}</a></h3>
@@ -417,6 +445,82 @@ const sortedPosts = allPosts
     border-radius: 8px;
     position: sticky;
     top: 100px;
+  }
+
+  /* Briefings Section */
+  .briefings-section {
+    padding: 100px 0 50px 0;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+  }
+
+  .briefings-section .section-header h2 {
+    color: white;
+  }
+
+  .briefings-section .view-all {
+    color: #fbbf24;
+  }
+
+  .briefings-section .view-all:hover {
+    color: #f59e0b;
+  }
+
+  .briefings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .briefing-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 28px;
+    border-radius: 8px;
+    border-left: 4px solid #fbbf24;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .briefing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    border-left-color: #f59e0b;
+  }
+
+  .briefing-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 16px 0 12px;
+    line-height: 1.4;
+  }
+
+  .briefing-card h3 a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .briefing-card h3 a:hover {
+    color: var(--color-accent-blue);
+  }
+
+  .briefing-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .briefing-card .card-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-accent-blue);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .briefing-card .card-link:hover {
+    color: #1d4ed8;
   }
 
   /* Analysis Section */

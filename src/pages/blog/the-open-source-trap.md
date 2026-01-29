@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/BlogPostLayout.astro
 title: "The Open Source Trap: How America Is Helping Its Rivals"
-description: "The well-intentioned push for open-source AI has become a strategic blunder, handing the CCP a playbook to accelerate its military capabilities. Here’s how it happened."
+description: "How open-source AI has become a strategic blunder in the US-China tech war, accelerating China's AI capabilities and military advantage. Analysis of AI strategy and national security."
 pubDate: "December 31, 2025"
 author: "Gil Gatson"
 ---
@@ -61,3 +61,13 @@ The open-source ideology, born in the collaborative spirit of early internet cul
 [3] [Meta Permits Its A.I. Models to Be Used for U.S. Military Purposes - The New York Times](https://www.nytimes.com/2024/11/04/technology/meta-ai-military.html)
 [4] [Beyond DeepSeek: China's Diverse Open-Weight AI Ecosystem and Its Policy Implications - Stanford HAI](https://hai.stanford.edu/policy/beyond-deepseek-chinas-diverse-open-weight-ai-ecosystem-and-its-policy-implications)
 [5] [Defense Priorities in the Open-Source AI Debate - CSIS](https://www.csis.org/analysis/defense-priorities-open-source-ai-debate)
+
+
+---
+
+### Related Analysis
+
+- [US Export Controls on China: Desperation, Not Dominance](/blog/us-export-controls-on-china-desperation-not-dominance) - How export controls reveal strategic weakness
+- [Why Energy, Not Talent, Is AI's Real Bottleneck](/blog/energy-the-real-bottleneck-for-ai) - Infrastructure challenges in the AI race
+
+**Want deeper analysis?** Check out [THE AI DELUSION](/books) for a comprehensive examination of America's strategic missteps in the AI and semiconductor wars.

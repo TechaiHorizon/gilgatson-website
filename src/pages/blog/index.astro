@@ -1,51 +1,64 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Get all blog posts dynamically
+const allPosts = await Astro.glob('./*.md');
+
+// Sort by date (newest first)
+const sortedPosts = allPosts.sort((a, b) => {
+  const dateA = new Date(a.frontmatter.pubDate);
+  const dateB = new Date(b.frontmatter.pubDate);
+  return dateB.getTime() - dateA.getTime();
+});
+
+// Separate briefings and articles
+const briefings = sortedPosts.filter(post => post.frontmatter.title.includes('Daily Tech Briefing'));
+const articles = sortedPosts.filter(post => !post.frontmatter.title.includes('Daily Tech Briefing'));
 ---
 
 <BaseLayout 
-  title="Blog - Gil Gatson"
-  description="Insights on technology, geopolitics, business strategy, and entrepreneurship from Gil Gatson."
+  title="Analysis - Gil Gatson"
+  description="Geopolitical analysis, tech insights, and daily briefings on AI, semiconductors, and US-China competition."
 >
   <section class="hero">
-    <h1>Blog</h1>
+    <h1>Analysis</h1>
     <p class="intro">
-      Insights on technology, geopolitics, business strategy, and entrepreneurship.
+      Geopolitical analysis, tech insights, and daily briefings on AI, semiconductors, and US-China competition.
     </p>
   </section>
   
   <div class="container">
-    <div class="blog-grid">
-      <article class="blog-card">
-        <h2><a href="/blog/america-losing-ai-race">Why America Is Losing the AI Race to China</a></h2>
-        <p class="meta">December 29, 2025</p>
-        <p>
-          In 2025, the AI contest is not about who drops the flashiest frontier model. It is about who can scale it, power it, staff it, and deploy it. China is winning the compounding game: open-weight distribution, electricity capacity, and coordinated deployment.
-        </p>
-        <a href="/blog/america-losing-ai-race" class="read-more">Read more →</a>
-      </article>
-      
-      <article class="blog-card">
-        <h2><a href="/blog/energy-the-real-bottleneck-for-ai">The Unseen Handbrake: Why Energy, Not Talent, Is AI's Real Bottleneck</a></h2>
-        <p class="meta">December 31, 2025</p>
-        <p>
-          Everyone's talking about algorithms and chips, but the brutal truth is that America's aging power grid is the single biggest threat to its AI dominance. Silicon Valley data centers sit empty for years waiting for power. China added 429 GW in 2024; the US added just 51 GW.
-        </p>
-        <a href="/blog/energy-the-real-bottleneck-for-ai" class="read-more">Read more →</a>
-      </article>
-      
-      <article class="blog-card">
-        <h2><a href="/blog/the-open-source-trap">The Open Source Trap: How America Is Helping Its Rivals</a></h2>
-        <p class="meta">December 31, 2025</p>
-        <p>
-          The well-intentioned push for open-source AI has become a strategic blunder, handing the CCP a playbook to accelerate its military capabilities. Here’s how it happened.
-        </p>
-        <a href="/blog/the-open-source-trap" class="read-more">Read more →</a>
-      </article>
-    </div>
+    <!-- Daily Briefings Section -->
+    {briefings.length > 0 && (
+      <section class="briefings-section">
+        <h2 class="section-title">Daily Tech Briefings</h2>
+        <div class="blog-grid">
+          {briefings.map((post) => (
+            <article class="blog-card briefing-card">
+              <h3><a href={post.url}>{post.frontmatter.title}</a></h3>
+              <p class="meta">{post.frontmatter.pubDate}</p>
+              <p>{post.frontmatter.description}</p>
+              <a href={post.url} class="read-more">Read briefing →</a>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
     
-    <div class="coming-soon">
-      <p>📝 Blog posts coming soon. Check back for regular updates on AI, geopolitics, and business strategy.</p>
-    </div>
+    <!-- Articles Section -->
+    <section class="articles-section">
+      <h2 class="section-title">Latest Analysis</h2>
+      <div class="blog-grid">
+        {articles.map((post) => (
+          <article class="blog-card">
+            <h3><a href={post.url}>{post.frontmatter.title}</a></h3>
+            <p class="meta">{post.frontmatter.pubDate}</p>
+            <p>{post.frontmatter.description}</p>
+            <a href={post.url} class="read-more">Read more →</a>
+          </article>
+        ))}
+      </div>
+    </section>
   </div>
 
   <style>
@@ -93,10 +106,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       margin-right: auto;
     }
     
+    .briefings-section,
+    .articles-section {
+      margin-bottom: 4rem;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--color-border);
+    }
+    
     .blog-grid {
       display: grid;
       gap: 2rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
     
     .blog-card {
@@ -111,17 +136,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     
-    .blog-card h2 {
+    .briefing-card {
+      background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+      border-color: #2196f3;
+    }
+    
+    .blog-card h3 {
       margin-bottom: 0.5rem;
       font-size: 1.5rem;
     }
     
-    .blog-card h2 a {
+    .blog-card h3 a {
       color: var(--color-text);
       text-decoration: none;
     }
     
-    .blog-card h2 a:hover {
+    .blog-card h3 a:hover {
       color: var(--color-accent);
     }
     
@@ -143,12 +173,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       text-decoration: underline;
     }
     
-    .coming-soon {
-      text-align: center;
-      padding: 2rem;
-      background: #f9fafb;
-      border-radius: 8px;
-      color: var(--color-gray);
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .intro {
+        font-size: 1rem;
+      }
     }
   </style>
 </BaseLayout>

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/BlogPostLayout.astro
 title: "The Unseen Handbrake: Why Energy, Not Talent, Is AI's Real Bottleneck"
-description: "Everyone is focused on algorithms and chips, but the brutal truth is that America's aging power grid is the single biggest threat to its AI dominance. Here's the data."
+description: "Why energy infrastructure, not chips or talent, is the real bottleneck in the US-China AI race. Analysis of power grid capacity and AI dominance in the tech war."
 pubDate: "December 31, 2025"
 author: "Gil Gatson"
 ---
@@ -92,3 +92,13 @@ For decades, we've outsourced our manufacturing and neglected our industrial bas
 [6]: [OpenAI warns White House of China’s energy dominance | Utility Dive](https://www.utilitydive.com/news/openai-white-house-china-energy-dominance/803967/)
 [7]: [AI Chip Inventory Problem: Power Shortages Leave Hardware Idle | Traxtech](https://www.traxtech.com/ai-in-supply-chain/ai-chip-inventory-problem-power-shortages-leave-hardware-idle)
 [8]: [More than 200 environmental groups demand halt to new data centers | The Guardian](https://www.theguardian.com/us-news/2025/dec/08/us-data-centers)
+
+
+---
+
+### Related Analysis
+
+- [US Export Controls on China: Desperation, Not Dominance](/blog/us-export-controls-on-china-desperation-not-dominance) - How semiconductor export controls reveal US weakness
+- [The Open Source Trap: How America Is Helping Its Rivals](/blog/the-open-source-trap) - Strategic blind spots in the US-China tech war
+
+**Want deeper analysis?** Check out [THE AI DELUSION](/books) for a comprehensive examination of America's strategic missteps in the AI and semiconductor wars.

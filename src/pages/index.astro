@@ -1,6 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import VisitorCounter from '../components/VisitorCounter.astro';
+
+// Get all blog posts and sort by date (newest first)
+const allPosts = await Astro.glob('../pages/blog/*.md');
+const sortedPosts = allPosts
+  .filter(post => post.frontmatter)
+  .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
+  .slice(0, 4); // Get only the 4 most recent
 ---
 
 <BaseLayout 
@@ -108,26 +115,14 @@ import VisitorCounter from '../components/VisitorCounter.astro';
       </div>
       
       <div class="analysis-grid">
-        <article class="analysis-card">
-          <span class="card-date">December 31, 2025</span>
-          <h3><a href="/blog/the-open-source-trap">The Open Source Trap: How America Is Helping Its Rivals</a></h3>
-          <p>Meta's Llama is powering China's military AI. When did "open innovation" become a national security liability?</p>
-          <a href="/blog/the-open-source-trap" class="card-link">Read more →</a>
-        </article>
-        
-        <article class="analysis-card">
-          <span class="card-date">December 31, 2025</span>
-          <h3><a href="/blog/energy-the-real-bottleneck-for-ai">The Unseen Handbrake: Why Energy, Not Talent, Is AI's Real Bottleneck</a></h3>
-          <p>China added 429 GW of power in 2024. The US added 51 GW. Guess who's winning the AI race?</p>
-          <a href="/blog/energy-the-real-bottleneck-for-ai" class="card-link">Read more →</a>
-        </article>
-        
-        <article class="analysis-card">
-          <span class="card-date">December 29, 2025</span>
-          <h3><a href="/blog/america-losing-ai-race">Why America Is Losing the AI Race to China</a></h3>
-          <p>The data doesn't lie. While we celebrate AI breakthroughs, China is quietly building the infrastructure to dominate.</p>
-          <a href="/blog/america-losing-ai-race" class="card-link">Read more →</a>
-        </article>
+        {sortedPosts.map(post => (
+          <article class="analysis-card">
+            <span class="card-date">{new Date(post.frontmatter.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <h3><a href={post.url}>{post.frontmatter.title}</a></h3>
+            <p>{post.frontmatter.excerpt}</p>
+            <a href={post.url} class="card-link">Read more →</a>
+          </article>
+        ))}
       </div>
     </div>
   </section>

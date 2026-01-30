@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import VisitorCounter from '../components/VisitorCounter.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
 
 // Get all blog posts
 const allPosts = await Astro.glob('../pages/blog/*.md');
@@ -178,6 +179,9 @@ const articles = allPosts
       </div>
     </div>
   </section>
+
+  <!-- Newsletter Signup -->
+  <NewsletterSignup />
 
   <!-- Visitor Counter -->
   <VisitorCounter />

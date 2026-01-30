@@ -1,0 +1,184 @@
+---
+// Newsletter Signup Component
+---
+
+<section class="newsletter-section">
+  <div class="newsletter-container">
+    <div class="newsletter-content">
+      <h2>Stay Ahead of the Curve</h2>
+      <p class="newsletter-description">
+        Get exclusive analysis on the US-China tech war, semiconductor strategy, and AI dominance delivered to your inbox. 
+        Join investors, policymakers, and tech leaders who read Gil Gatson's insights.
+      </p>
+      
+      <form class="newsletter-form" id="newsletter-form">
+        <div class="form-group">
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="Enter your email address" 
+            required 
+            aria-label="Email address"
+          />
+          <button type="submit" class="btn-subscribe">
+            Subscribe
+          </button>
+        </div>
+        <p class="form-note">
+          📧 Daily briefings + in-depth analysis. Unsubscribe anytime. No spam, ever.
+        </p>
+      </form>
+      
+      <div class="newsletter-social-proof">
+        <span>✓ Trusted by 1,200+ readers</span>
+        <span>✓ Free forever</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .newsletter-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+  
+  .newsletter-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  
+  .newsletter-content {
+    text-align: center;
+  }
+  
+  .newsletter-content h2 {
+    font-family: var(--font-display, 'Montserrat', sans-serif);
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: white;
+  }
+  
+  .newsletter-description {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    opacity: 0.95;
+  }
+  
+  .newsletter-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .form-group input[type="email"] {
+    flex: 1;
+    padding: 16px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background: white;
+    color: #1a1a1a;
+  }
+  
+  .form-group input[type="email"]:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.5);
+  }
+  
+  .form-group input[type="email"]::placeholder {
+    color: #999;
+  }
+  
+  .btn-subscribe {
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #DC2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  
+  .btn-subscribe:hover {
+    background: #B91C1C;
+  }
+  
+  .form-note {
+    font-size: 14px;
+    opacity: 0.9;
+    margin: 0;
+  }
+  
+  .newsletter-social-proof {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .newsletter-social-proof span {
+    opacity: 0.95;
+  }
+  
+  @media (max-width: 768px) {
+    .newsletter-section {
+      padding: 60px 0;
+    }
+    
+    .newsletter-content h2 {
+      font-size: 28px;
+    }
+    
+    .newsletter-description {
+      font-size: 16px;
+    }
+    
+    .form-group {
+      flex-direction: column;
+    }
+    
+    .btn-subscribe {
+      width: 100%;
+    }
+    
+    .newsletter-social-proof {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+</style>
+
+<script>
+  // Handle form submission
+  document.getElementById('newsletter-form')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const email = emailInput.value;
+    
+    // TODO: Replace with your actual newsletter service endpoint
+    // Options: Mailchimp, ConvertKit, Substack, Buttondown, etc.
+    console.log('Newsletter signup:', email);
+    
+    // Show success message
+    alert('Thanks for subscribing! Check your email to confirm your subscription.');
+    
+    // Reset form
+    emailInput.value = '';
+  });
+</script>

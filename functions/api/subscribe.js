@@ -9,7 +9,7 @@
 export async function onRequestPost(context) {
   // Get environment variables (set in Cloudflare Pages dashboard)
   const KIT_API_KEY = context.env.KIT_API_KEY;
-  const KIT_API_SECRET = context.env.KIT_API_SECRET;
+  const KIT_FORM_ID = '9030749'; // Clare form ID
 
   // CORS headers
   const corsHeaders = {
@@ -43,9 +43,9 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Check if API credentials are set
-    if (!KIT_API_KEY || !KIT_API_SECRET) {
-      console.error('Kit API credentials not configured');
+    // Check if API key is set
+    if (!KIT_API_KEY) {
+      console.error('Kit API key not configured');
       return new Response(
         JSON.stringify({ error: 'Server configuration error' }),
         {
@@ -58,15 +58,16 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Subscribe to Kit using V3 API
-    const kitResponse = await fetch('https://api.kit.com/v3/subscribers', {
+    // Subscribe to Kit using V3 API (form endpoint)
+    // Kit API v3 uses api_key in the request body, not Bearer token
+    const kitResponse = await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${KIT_API_KEY}`,
+        'Content-Type': 'application/json; charset=utf-8',
       },
       body: JSON.stringify({
-        email_address: email,
+        api_key: KIT_API_KEY,
+        email: email,
       }),
     });
 
@@ -94,7 +95,7 @@ export async function onRequestPost(context) {
       JSON.stringify({ 
         success: true,
         message: 'Successfully subscribed to the newsletter!',
-        subscriber_id: kitData.subscriber?.id
+        subscriber_id: kitData.subscription?.subscriber?.id
       }),
       {
         status: 200,

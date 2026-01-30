@@ -164,21 +164,49 @@
 </style>
 
 <script>
-  // Handle form submission
-  document.getElementById('newsletter-form')?.addEventListener('submit', function(e) {
+  // Handle newsletter form submission
+  document.getElementById('newsletter-form')?.addEventListener('submit', async function(e) {
     e.preventDefault();
     
+    const form = e.target as HTMLFormElement;
     const emailInput = document.getElementById('email') as HTMLInputElement;
+    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
     const email = emailInput.value;
     
-    // TODO: Replace with your actual newsletter service endpoint
-    // Options: Mailchimp, ConvertKit, Substack, Buttondown, etc.
-    console.log('Newsletter signup:', email);
+    // Disable form during submission
+    emailInput.disabled = true;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Subscribing...';
     
-    // Show success message
-    alert('Thanks for subscribing! Check your email to confirm your subscription.');
-    
-    // Reset form
-    emailInput.value = '';
+    try {
+      // Call Cloudflare Pages Function to subscribe via Kit API
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        // Success
+        alert('🎉 Thanks for subscribing! Check your email to confirm your subscription.');
+        emailInput.value = '';
+      } else {
+        // Error from API
+        alert(`❌ ${data.error || 'Failed to subscribe. Please try again later.'}`);
+      }
+    } catch (error) {
+      // Network or other error
+      console.error('Subscription error:', error);
+      alert('❌ An error occurred. Please check your internet connection and try again.');
+    } finally {
+      // Re-enable form
+      emailInput.disabled = false;
+      submitButton.disabled = false;
+      submitButton.textContent = 'Subscribe';
+    }
   });
 </script>

@@ -48,7 +48,7 @@ const articles = allPosts
       </div>
       
       <div class="hero-visual">
-        <img src="/covers/ai-delusion.jpg" alt="THE AI DELUSION book cover" />
+        <img src="/covers/ai-delusion.jpg" alt="THE AI DELUSION book cover by Gil Gatson - America's AI Future and US-China Tech War Analysis" loading="eager" width="400" height="600" />
         <div class="hero-badge">
           <span class="badge-stars">★★★★★</span>
           <span class="badge-text">4.8/5 from 247 readers</span>
@@ -108,7 +108,31 @@ const articles = allPosts
       </div>
       
       <div class="book-cover">
-        <img src="/covers/ai-delusion.jpg" alt="THE AI DELUSION book cover" />
+        <img src="/covers/ai-delusion.jpg" alt="THE AI DELUSION book cover by Gil Gatson - America's AI Future and US-China Tech War Analysis" loading="eager" width="400" height="600" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="faq-container">
+      <h2>Frequently Asked Questions</h2>
+      
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>Who should read THE AI DELUSION?</h3>
+          <p>Investors, policymakers, tech executives, and anyone concerned about America's technological future and the US-China tech competition. If you want unfiltered analysis of semiconductor supply chains, AI dominance, and strategic realities, this book is for you.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>What makes this analysis different?</h3>
+          <p>No fluff, no cope. Just hard truths about semiconductor supply chains, AI dominance, and strategic realities. Gil Gatson provides data-driven geopolitical analysis that cuts through the noise and exposes the vulnerabilities in America's tech strategy.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>How often is new analysis published?</h3>
+          <p>Daily tech briefings are published every morning at 9 AM EST, aggregating key developments from Hacker News, Techmeme, and Reuters. In-depth analysis articles on the US-China tech war, semiconductor policy, and AI strategy are published regularly.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -625,6 +649,55 @@ const articles = allPosts
     color: var(--color-accent-red-dark);
   }
 
+  /* FAQ Section */
+  .faq-section {
+    padding: 80px 0;
+    background: var(--color-bg-primary);
+  }
+
+  .faq-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .faq-container h2 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .faq-item {
+    background: var(--color-bg-secondary);
+    padding: 32px;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-accent-blue);
+  }
+
+  .faq-item h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .faq-item p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
   /* Mobile Responsive */
   @media (max-width: 768px) {
     .hero-container {
@@ -661,6 +734,10 @@ const articles = allPosts
     }
 
     .analysis-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
       grid-template-columns: 1fr;
     }
   }

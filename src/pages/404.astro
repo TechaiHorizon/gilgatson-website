@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Page Not Found - Gil Gatson"
+  description="The page you're looking for doesn't exist. Explore Gil Gatson's analysis on AI, semiconductors, and the US-China tech war."
+>
+  <div class="error-container">
+    <div class="error-content">
+      <h1 class="error-code">404</h1>
+      <h2 class="error-title">Page Not Found</h2>
+      <p class="error-message">
+        The page you're looking for doesn't exist or has been moved. 
+        Let's get you back on track.
+      </p>
+      
+      <div class="error-links">
+        <a href="/" class="btn-primary">Go to Homepage</a>
+        <a href="/blog" class="btn-secondary">Read Analysis</a>
+      </div>
+      
+      <div class="quick-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/books">Books by Gil Gatson</a></li>
+          <li><a href="/about">About Gil Gatson</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/blog">Latest Analysis & Briefings</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .error-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      text-align: center;
+    }
+    
+    .error-code {
+      font-size: 120px;
+      font-weight: 900;
+      color: #DC2626;
+      margin-bottom: 0;
+      line-height: 1;
+    }
+    
+    .error-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin: 24px 0 16px;
+    }
+    
+    .error-message {
+      font-size: 18px;
+      color: var(--color-gray);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    
+    .error-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+    }
+    
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #2563EB;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+    
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+    
+    .btn-secondary {
+      display: inline-block;
+      padding: 14px 32px;
+      background: white;
+      color: #2563EB;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 16px;
+      border: 2px solid #2563EB;
+      transition: all 0.2s;
+    }
+    
+    .btn-secondary:hover {
+      background: #2563EB;
+      color: white;
+    }
+    
+    .quick-links {
+      padding-top: 40px;
+      border-top: 1px solid var(--color-border);
+    }
+    
+    .quick-links h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--color-text);
+    }
+    
+    .quick-links ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .quick-links li {
+      text-align: left;
+    }
+    
+    .quick-links a {
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    .quick-links a:hover {
+      color: #1d4ed8;
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 80px;
+      }
+      
+      .error-title {
+        font-size: 28px;
+      }
+      
+      .error-links {
+        flex-direction: column;
+      }
+      
+      .quick-links ul {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .quick-links li {
+        text-align: center;
+      }
+    }
+  </style>
+</BaseLayout>

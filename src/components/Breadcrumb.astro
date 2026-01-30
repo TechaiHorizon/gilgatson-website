@@ -1,0 +1,84 @@
+---
+interface Props {
+  items: Array<{
+    label: string;
+    url?: string;
+  }>;
+}
+
+const { items } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Generate breadcrumb schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.label,
+    "item": item.url ? new URL(item.url, Astro.site).toString() : canonicalURL.toString()
+  }))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    {items.map((item, index) => (
+      <li>
+        {item.url ? (
+          <a href={item.url}>{item.label}</a>
+        ) : (
+          <span>{item.label}</span>
+        )}
+        {index < items.length - 1 && <span class="separator">›</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+  }
+  
+  .breadcrumb ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .breadcrumb li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .breadcrumb a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .breadcrumb a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+  }
+  
+  .breadcrumb span:not(.separator) {
+    color: var(--color-gray);
+  }
+  
+  .separator {
+    color: var(--color-gray);
+    user-select: none;
+  }
+</style>

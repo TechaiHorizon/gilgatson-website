@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 interface Props {
   frontmatter: {
@@ -20,6 +21,11 @@ const publishDate = new Date(frontmatter.pubDate).toISOString();
 
 <BaseLayout title={`${frontmatter.title} | Gil Gatson`} description={frontmatter.description} image={frontmatter.image}>
   <div class="container">
+    <Breadcrumb items={[
+      { label: 'Home', url: '/' },
+      { label: 'Analysis', url: '/blog' },
+      { label: frontmatter.title }
+    ]} />
     <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
       <!-- Schema.org BlogPosting markup -->
       <script type="application/ld+json" set:html={JSON.stringify({

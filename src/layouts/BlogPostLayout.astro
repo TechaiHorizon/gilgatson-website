@@ -9,6 +9,8 @@ interface Props {
     pubDate: string;
     author: string;
     image?: string;
+    keywords?: string[];
+    topics?: string;
   };
 }
 
@@ -19,7 +21,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const publishDate = new Date(frontmatter.pubDate).toISOString();
 ---
 
-<BaseLayout title={`${frontmatter.title} | Gil Gatson`} description={frontmatter.description} image={frontmatter.image}>
+<BaseLayout title={`${frontmatter.title} | Gil Gatson`} description={frontmatter.description} image={frontmatter.image} keywords={frontmatter.keywords}>
+  <Fragment slot="head">
+    {frontmatter.keywords && frontmatter.keywords.map((keyword: string) => (
+      <meta property="article:tag" content={keyword} />
+    ))}
+    <meta property="article:published_time" content={publishDate} />
+    <meta property="article:author" content={frontmatter.author} />
+  </Fragment>
   <div class="container">
     <Breadcrumb items={[
       { label: 'Home', url: '/' },
@@ -50,7 +59,9 @@ const publishDate = new Date(frontmatter.pubDate).toISOString();
           "@id": canonicalURL
         },
         "image": frontmatter.image ? new URL(frontmatter.image, Astro.site) : new URL('/og-image.jpg', Astro.site),
-        "url": canonicalURL
+        "url": canonicalURL,
+        "keywords": frontmatter.keywords ? frontmatter.keywords.join(', ') : undefined,
+        "about": frontmatter.topics || undefined
       })} />
       
       <header class="post-header">

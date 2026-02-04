@@ -3,9 +3,10 @@ interface Props {
   title: string;
   description: string;
   image?: string;
+  keywords?: string[];
 }
 
-const { title, description, image = '/og-image.jpg' } = Astro.props;
+const { title, description, image = '/og-image.jpg', keywords } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -20,6 +21,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    {keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
     <link rel="canonical" href={canonicalURL} />
     
     <!-- Open Graph / Facebook -->
@@ -49,6 +51,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         "https://www.linkedin.com/in/gilgatson"
       ]
     })} />
+    
+    <!-- Additional head content from child layouts -->
+    <slot name="head" />
     
     <style>
       * {

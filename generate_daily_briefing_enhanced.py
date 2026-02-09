@@ -1,83 +1,295 @@
 #!/usr/bin/env python3
 """
-Enhanced Daily Tech Briefing Generator for gilgatson.com with SEO optimization
-Fetches news from Reuters and AP, generates briefing with keyword-rich metadata.
+Enhanced Daily Tech Briefing Generator for gilgatson.com
+Fetches REAL news from Hacker News API, Techmeme, and AP News,
+then uses LLM only for Gil Gatson's strategic analysis.
 """
 
 import os
 import sys
 import json
-from datetime import datetime
+import re
+import time
+import logging
+from datetime import datetime, timedelta
+from pathlib import Path
+
+import requests
+from bs4 import BeautifulSoup
 from openai import OpenAI
 
-def fetch_trending_news():
-    """Fetch trending tech news using OpenAI with web search capabilities."""
+# ─── Configuration ───────────────────────────────────────────────────────────
+REPO_DIR = os.environ.get("REPO_DIR", "/home/ubuntu/gilgatson-website-repo")
+BLOG_DIR = os.path.join(REPO_DIR, "src", "pages", "blog")
+LOG_FILE = os.path.join(REPO_DIR, "briefing_generator.log")
+
+RELEVANCE_KEYWORDS = [
+    "ai", "artificial intelligence", "semiconductor", "chip", "china", "taiwan",
+    "tsmc", "nvidia", "deepseek", "export", "sanctions", "openai", "anthropic",
+    "llm", "gpu", "intel", "amd", "claude", "gpt", "gemini", "machine learning",
+    "neural", "model", "tech war", "tariff", "huawei", "bytedance", "tiktok",
+    "compute", "data center", "quantum", "robotics", "autonomous", "regulation",
+    "copyright", "open source", "foundry", "wafer", "lithography", "asml",
+    "arm", "qualcomm", "broadcom", "apple intelligence", "siri", "alexa",
+    "microsoft", "google", "meta", "amazon", "agent", "agi", "safety",
+    "alignment", "transformer", "diffusion", "training", "inference",
+]
+
+# ─── Logging ─────────────────────────────────────────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler(sys.stdout),
+    ],
+)
+log = logging.getLogger(__name__)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# NEWS FETCHING — Real sources only
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def _is_relevant(text: str) -> bool:
+    """Check if text matches any relevance keyword."""
+    text_lower = text.lower()
+    return any(kw in text_lower for kw in RELEVANCE_KEYWORDS)
+
+
+def fetch_hackernews(max_stories: int = 60) -> list[dict]:
+    """Fetch top stories from Hacker News API and filter for relevance."""
+    log.info("Fetching from Hacker News API...")
+    stories = []
+    try:
+        resp = requests.get(
+            "https://hacker-news.firebaseio.com/v0/topstories.json", timeout=15
+        )
+        resp.raise_for_status()
+        top_ids = resp.json()[:max_stories]
+
+        for sid in top_ids:
+            try:
+                item = requests.get(
+                    f"https://hacker-news.firebaseio.com/v0/item/{sid}.json",
+                    timeout=10,
+                ).json()
+                if not item or "title" not in item:
+                    continue
+                if _is_relevant(item["title"]):
+                    stories.append(
+                        {
+                            "title": item["title"],
+                            "url": item.get(
+                                "url",
+                                f"https://news.ycombinator.com/item?id={sid}",
+                            ),
+                            "source": "Hacker News",
+                            "score": item.get("score", 0),
+                            "time": datetime.fromtimestamp(item["time"]),
+                        }
+                    )
+            except Exception:
+                continue
+
+        log.info(f"  Hacker News: {len(stories)} relevant stories found")
+    except Exception as e:
+        log.error(f"  Hacker News fetch failed: {e}")
+    return stories
+
+
+def fetch_techmeme() -> list[dict]:
+    """Scrape Techmeme for current tech headlines."""
+    log.info("Fetching from Techmeme...")
+    stories = []
+    try:
+        resp = requests.get(
+            "https://www.techmeme.com/",
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=15,
+        )
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
+        headlines = soup.select("a.ourh")
+
+        for h in headlines:
+            title = h.get_text(strip=True)
+            url = h.get("href", "")
+            if title and url and _is_relevant(title):
+                stories.append(
+                    {
+                        "title": title,
+                        "url": url,
+                        "source": "Techmeme",
+                        "score": 0,
+                        "time": datetime.now(),  # Techmeme doesn't expose timestamps easily
+                    }
+                )
+
+        log.info(f"  Techmeme: {len(stories)} relevant stories found")
+    except Exception as e:
+        log.error(f"  Techmeme fetch failed: {e}")
+    return stories
+
+
+def fetch_apnews() -> list[dict]:
+    """Scrape AP News technology hub for headlines."""
+    log.info("Fetching from AP News...")
+    stories = []
+    try:
+        resp = requests.get(
+            "https://apnews.com/hub/technology",
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=15,
+        )
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
+        links = soup.find_all("a")
+
+        for a in links:
+            text = a.get_text(strip=True)
+            href = a.get("href", "")
+            if text and len(text) > 25 and "/article/" in href:
+                if not href.startswith("http"):
+                    href = "https://apnews.com" + href
+                if _is_relevant(text):
+                    stories.append(
+                        {
+                            "title": text,
+                            "url": href,
+                            "source": "AP News",
+                            "score": 0,
+                            "time": datetime.now(),
+                        }
+                    )
+
+        log.info(f"  AP News: {len(stories)} relevant stories found")
+    except Exception as e:
+        log.error(f"  AP News fetch failed: {e}")
+    return stories
+
+
+def fetch_arstechnica() -> list[dict]:
+    """Scrape Ars Technica for AI/tech headlines."""
+    log.info("Fetching from Ars Technica...")
+    stories = []
+    try:
+        resp = requests.get(
+            "https://arstechnica.com/",
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=15,
+        )
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
+        links = soup.find_all("a")
+        seen_urls = set()
+
+        for a in links:
+            text = a.get_text(strip=True)
+            href = a.get("href", "")
+            if (
+                text
+                and len(text) > 25
+                and href
+                and href.startswith("https://arstechnica.com/")
+                and href not in seen_urls
+                and _is_relevant(text)
+            ):
+                seen_urls.add(href)
+                stories.append(
+                    {
+                        "title": text,
+                        "url": href,
+                        "source": "Ars Technica",
+                        "score": 0,
+                        "time": datetime.now(),
+                    }
+                )
+
+        log.info(f"  Ars Technica: {len(stories)} relevant stories found")
+    except Exception as e:
+        log.error(f"  Ars Technica fetch failed: {e}")
+    return stories
+
+
+# High-priority keywords that define Gil Gatson's core topics
+CORE_KEYWORDS = [
+    "semiconductor", "chip", "china", "taiwan", "tsmc", "nvidia", "deepseek",
+    "export", "sanctions", "huawei", "tech war", "tariff", "asml", "foundry",
+    "wafer", "lithography", "intel", "amd", "qualcomm", "broadcom", "arm",
+    "openai", "anthropic", "google", "meta", "microsoft", "amazon",
+    "ai", "artificial intelligence", "llm", "gpu", "agi", "safety",
+    "regulation", "data center", "compute", "training", "inference",
+    "geopolit", "trade", "billion", "funding", "invest",
+]
+
+
+def _relevance_score(title: str) -> int:
+    """Score a story's relevance to Gil Gatson's core topics."""
+    title_lower = title.lower()
+    score = 0
+    for kw in CORE_KEYWORDS:
+        if kw in title_lower:
+            score += 1
+    return score
+
+
+def deduplicate_stories(stories: list[dict]) -> list[dict]:
+    """Remove duplicate stories based on URL and similar titles."""
+    seen_urls = set()
+    seen_titles = set()
+    unique = []
+    for s in stories:
+        url_key = s["url"].split("?")[0].rstrip("/")
+        # Simple title dedup: first 50 chars lowered
+        title_key = s["title"][:50].lower().strip()
+        if url_key not in seen_urls and title_key not in seen_titles:
+            seen_urls.add(url_key)
+            seen_titles.add(title_key)
+            unique.append(s)
+    return unique
+
+
+def fetch_all_news() -> list[dict]:
+    """Fetch from all sources, deduplicate, and rank."""
+    all_stories = []
+    all_stories.extend(fetch_hackernews())
+    all_stories.extend(fetch_techmeme())
+    all_stories.extend(fetch_apnews())
+    all_stories.extend(fetch_arstechnica())
+
+    # Deduplicate
+    unique = deduplicate_stories(all_stories)
+
+    # Sort by relevance to Gil Gatson's core topics first, then by HN score as tiebreaker
+    for s in unique:
+        s["relevance"] = _relevance_score(s["title"])
+    unique.sort(key=lambda x: (x["relevance"], x.get("score", 0)), reverse=True)
+
+    log.info(f"Total unique relevant stories: {len(unique)}")
+    return unique
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CONTENT GENERATION — LLM for analysis only, NOT for news
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def generate_briefing_content(stories: list[dict], date_str: str) -> str:
+    """Use LLM to write Gil Gatson's analysis of REAL news stories."""
+    if len(stories) < 3:
+        log.warning(f"Only {len(stories)} stories found — broadening might be needed")
+
+    # Take top 6 stories (or fewer if not enough)
+    top_stories = stories[:6]
+
+    # Build the news digest for the LLM
+    news_digest = ""
+    for i, s in enumerate(top_stories, 1):
+        news_digest += f"{i}. HEADLINE: {s['title']}\n"
+        news_digest += f"   SOURCE: {s['source']}\n"
+        news_digest += f"   URL: {s['url']}\n\n"
+
     client = OpenAI()
-    
-    today = datetime.now().strftime("%B %d, %Y")
-    
-    # Use OpenAI to fetch and summarize trending news
-    response = client.chat.completions.create(
-        model="gpt-4.1-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": """You are a news aggregator assistant. Your task is to find the top 6 trending tech news stories from the past 24 hours, focusing on:
-- AI developments and policy
-- Semiconductor industry news
-- US-China tech competition
-- Geopolitical tech issues
-
-IMPORTANT: Only use news from Reuters (reuters.com) and Associated Press (apnews.com). Do not use any other sources.
-
-For each story, provide:
-1. A clear headline
-2. The full Reuters or AP URL
-3. A 2-3 sentence factual summary
-4. 2-3 relevant keywords (e.g., "AI chips", "export controls", "TSMC")
-
-Format your response as a JSON array with objects containing: headline, url, summary, keywords"""
-            },
-            {
-                "role": "user",
-                "content": f"Find the top 6 trending tech news stories from Reuters and AP for {today}. Focus on AI, semiconductors, and US-China tech competition."
-            }
-        ],
-        temperature=0.7
-    )
-    
-    return response.choices[0].message.content
-
-def generate_article_metadata(news_data):
-    """Generate SEO-optimized metadata from news data."""
-    client = OpenAI()
-    
-    response = client.chat.completions.create(
-        model="gpt-4.1-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": """You are an SEO expert. Based on the news stories provided, generate:
-1. A unique, keyword-rich meta description (150-160 characters) that includes key terms like "AI", "semiconductors", "US-China", specific companies, or policies mentioned
-2. A list of 5-8 relevant keywords/tags for the article
-3. A brief summary of the main topics (one sentence)
-
-Format as JSON: {"description": "...", "keywords": ["...", "..."], "topics": "..."}"""
-            },
-            {
-                "role": "user",
-                "content": f"Generate SEO metadata for these news stories:\n\n{news_data}"
-            }
-        ],
-        temperature=0.5
-    )
-    
-    return response.choices[0].message.content
-
-def generate_article(news_data, date_str):
-    """Generate a Gil Gatson style article from news data."""
-    client = OpenAI()
-    
     response = client.chat.completions.create(
         model="gpt-4.1-mini",
         messages=[
@@ -92,49 +304,102 @@ BRAND VOICE:
 - No fluff, no cope, just hard truths
 - Target audience: Investors, policy makers, tech leaders
 
+CRITICAL RULES:
+- You are given REAL news headlines with REAL URLs. Use them EXACTLY as provided.
+- Do NOT invent, fabricate, or modify any URLs or headlines.
+- Each bullet point MUST use the exact headline and URL provided.
+
 WRITING STYLE:
 - 400-500 words total
-- 6 bullet points, each covering one news story
-- Each bullet starts with a linked headline in bold
+- One bullet point per story (up to 6 stories)
+- Each bullet starts with: **[Exact Headline](exact_url)**
 - Follow with 2-3 sentences of sharp, contrarian analysis
 - Challenge conventional wisdom
 - Point out hidden risks, contradictions, or geopolitical implications
-- Use numbered references [1], [2], etc.
-- End with: "---\n\n*Sources: Reuters, AP | Compiled [Date]*"
+- End with: "---\\n\\n*Sources: Hacker News, Techmeme, AP News, Ars Technica | Compiled [Date]*"
 
 NO hashtags, NO calls-to-action, NO promotional language.
-
-Focus on exposing uncomfortable truths that mainstream coverage misses."""
+Focus on exposing uncomfortable truths that mainstream coverage misses.""",
             },
             {
                 "role": "user",
-                "content": f"Write a daily tech briefing for {date_str} based on this news data:\n\n{news_data}\n\nRemember: contrarian analysis that challenges mainstream narratives. Each story should reveal hidden risks or contradictions."
-            }
+                "content": f"""Write a daily tech briefing for {date_str} based on these REAL news stories.
+Use the EXACT headlines and URLs provided below. Do NOT change or fabricate any URLs.
+
+NEWS STORIES:
+{news_digest}
+
+Remember: contrarian analysis that challenges mainstream narratives. Each story should reveal hidden risks or contradictions.""",
+            },
         ],
         temperature=0.8,
-        max_tokens=1500
+        max_tokens=1500,
     )
-    
+
     return response.choices[0].message.content
 
-def save_article(content, metadata, date_str, formatted_date):
-    """Save the article to the blog directory with enhanced SEO metadata."""
-    # Create filename from date
-    filename = f"daily-briefing-{date_str}.md"
-    filepath = f"/home/ubuntu/gilgatson-website/src/pages/blog/{filename}"
-    
-    # Parse metadata
+
+def generate_seo_metadata(stories: list[dict]) -> dict:
+    """Generate unique SEO metadata from the actual stories."""
+    # Build a description from actual headlines
+    top_titles = [s["title"][:60] for s in stories[:3]]
+    topics_str = "; ".join(top_titles)
+
+    client = OpenAI()
+    response = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": """Generate SEO metadata based on these real news headlines.
+Return ONLY valid JSON with these fields:
+- "description": A unique, specific meta description (150-160 chars) mentioning key topics from today's stories
+- "keywords": Array of 5-8 relevant keywords extracted from the headlines
+- "topics": One-sentence summary of main topics covered
+
+The description MUST be unique and specific to these stories. Do NOT use generic descriptions.""",
+            },
+            {
+                "role": "user",
+                "content": f"Headlines:\n{topics_str}",
+            },
+        ],
+        temperature=0.3,
+        max_tokens=300,
+    )
+
+    raw = response.choices[0].message.content.strip()
+    # Try to extract JSON from the response
     try:
-        meta = json.loads(metadata)
-        description = meta.get("description", "Key developments in AI, semiconductors, and the US-China tech war from the past 24 hours.")
-        keywords = meta.get("keywords", [])
-        topics = meta.get("topics", "AI, semiconductors, US-China tech competition")
-    except:
-        description = "Key developments in AI, semiconductors, and the US-China tech war from the past 24 hours."
-        keywords = ["AI", "semiconductors", "US-China tech war"]
-        topics = "AI, semiconductors, US-China tech competition"
-    
-    # Create frontmatter with enhanced SEO
+        # Handle markdown code blocks
+        if "```" in raw:
+            match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", raw, re.DOTALL)
+            if match:
+                raw = match.group(1)
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        log.warning("Failed to parse SEO metadata JSON, using fallback")
+        # Fallback: build from actual headlines
+        return {
+            "description": f"Today's briefing covers {top_titles[0][:50]} and more key developments in AI and semiconductors.",
+            "keywords": ["AI", "semiconductors", "tech war", "geopolitics"],
+            "topics": topics_str[:150],
+        }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FILE OUTPUT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def save_briefing(content: str, metadata: dict, date_str: str, formatted_date: str) -> str:
+    """Save the briefing as a Markdown file with proper frontmatter."""
+    filename = f"daily-briefing-{date_str}.md"
+    filepath = os.path.join(BLOG_DIR, filename)
+
+    description = metadata.get("description", "")
+    keywords = metadata.get("keywords", [])
+    topics = metadata.get("topics", "")
+
     frontmatter = f"""---
 layout: ../../layouts/BlogPostLayout.astro
 title: "Daily Tech Briefing - {formatted_date}"
@@ -146,89 +411,90 @@ topics: "{topics}"
 ---
 
 """
-    
-    # Write the file
-    with open(filepath, 'w') as f:
+    with open(filepath, "w") as f:
         f.write(frontmatter + content)
-    
-    print(f"✓ Article saved to {filepath}")
-    print(f"✓ SEO Description: {description}")
-    print(f"✓ Keywords: {', '.join(keywords)}")
+
+    log.info(f"Saved briefing to {filepath}")
+    log.info(f"SEO Description: {description}")
     return filepath
 
-def git_commit_and_push(filename):
-    """Commit and push the new article to GitHub."""
-    os.chdir("/home/ubuntu/gilgatson-website")
-    
-    # Git operations
-    os.system("git add .")
-    os.system(f'git commit -m "Add daily briefing for {filename}"')
-    os.system("git push origin main")
-    
-    print("✓ Changes pushed to GitHub")
-    print("✓ Cloudflare Pages will auto-deploy within 1-2 minutes")
 
-def main():
-    """Main execution flow."""
-    print("=" * 60)
-    print("Gil Gatson Daily Tech Briefing Generator (Enhanced SEO)")
-    print("=" * 60)
-    
-    # Get current date
-    now = datetime.now()
+def git_commit_and_push(date_str: str):
+    """Commit and push changes to GitHub."""
+    os.chdir(REPO_DIR)
+    os.system("git add .")
+    os.system(f'git commit -m "Add daily briefing for {date_str} (real news)"')
+    os.system("git push origin main")
+    log.info("Changes pushed to GitHub")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MAIN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def main(target_date: str = None):
+    """Main execution flow.
+
+    Args:
+        target_date: Optional date string in YYYY-MM-DD format.
+                     If None, uses today's date.
+    """
+    log.info("=" * 60)
+    log.info("Gil Gatson Daily Tech Briefing Generator (Live News)")
+    log.info("=" * 60)
+
+    # Determine date
+    if target_date:
+        now = datetime.strptime(target_date, "%Y-%m-%d")
+    else:
+        now = datetime.now()
+
     date_str = now.strftime("%Y-%m-%d")
     formatted_date = now.strftime("%B %d, %Y")
-    
-    print(f"\n📅 Generating briefing for {formatted_date}")
-    
-    # Step 1: Fetch news
-    print("\n🔍 Fetching trending news from Reuters and AP...")
-    try:
-        news_data = fetch_trending_news()
-        print("✓ News data retrieved")
-    except Exception as e:
-        print(f"✗ Error fetching news: {e}")
+
+    log.info(f"Generating briefing for {formatted_date}")
+
+    # Step 1: Fetch real news
+    log.info("Step 1: Fetching real news from live sources...")
+    stories = fetch_all_news()
+
+    if not stories:
+        log.error("FATAL: No stories fetched from any source. Aborting.")
         sys.exit(1)
-    
-    # Step 2: Generate SEO metadata
-    print("\n🎯 Generating SEO metadata...")
-    try:
-        metadata = generate_article_metadata(news_data)
-        print("✓ SEO metadata generated")
-    except Exception as e:
-        print(f"⚠ Warning: Could not generate metadata: {e}")
-        metadata = '{"description": "Key developments in AI, semiconductors, and the US-China tech war from the past 24 hours.", "keywords": ["AI", "semiconductors", "US-China tech war"], "topics": "AI, semiconductors, US-China tech competition"}'
-    
-    # Step 3: Generate article
-    print("\n✍️  Generating article in Gil Gatson's voice...")
-    try:
-        article_content = generate_article(news_data, formatted_date)
-        print("✓ Article generated")
-    except Exception as e:
-        print(f"✗ Error generating article: {e}")
-        sys.exit(1)
-    
-    # Step 4: Save article
-    print("\n💾 Saving article with SEO enhancements...")
-    try:
-        filepath = save_article(article_content, metadata, date_str, formatted_date)
-    except Exception as e:
-        print(f"✗ Error saving article: {e}")
-        sys.exit(1)
-    
+
+    if len(stories) < 3:
+        log.warning(f"Only {len(stories)} stories found. Briefing may be thin.")
+
+    # Log what we found
+    log.info("Top stories for today's briefing:")
+    for i, s in enumerate(stories[:6], 1):
+        log.info(f"  {i}. [{s['source']}] {s['title'][:80]}")
+
+    # Step 2: Generate SEO metadata from real headlines
+    log.info("Step 2: Generating SEO metadata...")
+    metadata = generate_seo_metadata(stories)
+
+    # Step 3: Generate Gil's analysis of the real news
+    log.info("Step 3: Generating Gil Gatson's analysis...")
+    content = generate_briefing_content(stories, formatted_date)
+
+    # Step 4: Save
+    log.info("Step 4: Saving briefing...")
+    filepath = save_briefing(content, metadata, date_str, formatted_date)
+
     # Step 5: Git commit and push
-    print("\n🚀 Committing and pushing to GitHub...")
-    try:
-        git_commit_and_push(date_str)
-    except Exception as e:
-        print(f"✗ Error with git operations: {e}")
-        sys.exit(1)
-    
-    print("\n" + "=" * 60)
-    print("✅ Daily briefing published successfully!")
-    print("=" * 60)
-    print(f"\nView at: https://gilgatson.com/blog/daily-briefing-{date_str}")
-    print("\n")
+    log.info("Step 5: Committing and pushing to GitHub...")
+    git_commit_and_push(date_str)
+
+    log.info("=" * 60)
+    log.info("Daily briefing published successfully!")
+    log.info(f"View at: https://gilgatson.com/blog/daily-briefing-{date_str}")
+    log.info("=" * 60)
+
+    return filepath
+
 
 if __name__ == "__main__":
-    main()
+    # Accept optional date argument: python generate_daily_briefing_enhanced.py 2026-02-09
+    target = sys.argv[1] if len(sys.argv) > 1 else None
+    main(target_date=target)

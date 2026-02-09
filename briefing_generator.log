@@ -51,3 +51,32 @@
 2026-02-09 04:39:47,789 [INFO] Daily briefing published successfully!
 2026-02-09 04:39:47,789 [INFO] View at: https://gilgatson.com/blog/daily-briefing-2026-02-09
 2026-02-09 04:39:47,789 [INFO] ============================================================
+2026-02-09 09:05:19,757 [INFO] ============================================================
+2026-02-09 09:05:19,757 [INFO] Gil Gatson Daily Tech Briefing Generator (Live News)
+2026-02-09 09:05:19,757 [INFO] ============================================================
+2026-02-09 09:05:19,757 [INFO] Generating briefing for February 09, 2026
+2026-02-09 09:05:19,757 [INFO] Step 1: Fetching real news from live sources...
+2026-02-09 09:05:19,757 [INFO] Fetching from Hacker News API...
+2026-02-09 09:05:23,669 [INFO]   Hacker News: 13 relevant stories found
+2026-02-09 09:05:23,670 [INFO] Fetching from Techmeme...
+2026-02-09 09:05:24,979 [INFO]   Techmeme: 30 relevant stories found
+2026-02-09 09:05:24,981 [INFO] Fetching from AP News...
+2026-02-09 09:05:26,585 [INFO]   AP News: 72 relevant stories found
+2026-02-09 09:05:26,586 [INFO] Fetching from Ars Technica...
+2026-02-09 09:05:27,712 [INFO]   Ars Technica: 14 relevant stories found
+2026-02-09 09:05:27,714 [INFO] Total unique relevant stories: 88
+2026-02-09 09:05:27,714 [INFO] Top stories for today's briefing:
+2026-02-09 09:05:27,714 [INFO]   1. [Techmeme] A look at the 2026 Super Bowl ads from Anthropic, Meta, Amazon, Google, and othe
+2026-02-09 09:05:27,714 [INFO]   2. [Hacker News] TSMC to make advanced AI semiconductors in Japan
+2026-02-09 09:05:27,714 [INFO]   3. [Techmeme] The European Commission sends a statement of objections to Meta over WhatsApp bl
+2026-02-09 09:05:27,715 [INFO]   4. [Techmeme] China says its trade surplus from digital services rose 100%+ to a record $33B i
+2026-02-09 09:05:27,715 [INFO]   5. [AP News] Anthropic, OpenAI rivalry spills into new Super Bowl ads as both fight to win ov
+2026-02-09 09:05:27,715 [INFO]   6. [Ars Technica] OpenAI is hoppin’ mad about Anthropic’s new Super Bowl TV ads
+2026-02-09 09:05:27,715 [INFO] Step 2: Generating SEO metadata...
+2026-02-09 09:05:30,774 [INFO] HTTP Request: POST https://api.manus.im/api/llm-proxy/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-09 09:05:30,780 [INFO] Step 3: Generating Gil Gatson's analysis...
+2026-02-09 09:05:48,489 [INFO] HTTP Request: POST https://api.manus.im/api/llm-proxy/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-09 09:05:48,490 [INFO] Step 4: Saving briefing...
+2026-02-09 09:05:48,490 [INFO] Saved briefing to /home/ubuntu/gilgatson-website-repo/src/pages/blog/daily-briefing-2026-02-09.md
+2026-02-09 09:05:48,490 [INFO] SEO Description: Explore the 2026 Super Bowl ads from Anthropic, Meta, and Amazon, TSMC's plan to produce advanced AI semiconductors in Japan, and the European Commission's objections in a major regulatory move.
+2026-02-09 09:05:48,490 [INFO] Step 5: Committing and pushing to GitHub...

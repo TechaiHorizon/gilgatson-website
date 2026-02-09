@@ -132,7 +132,7 @@ const articles = allPosts
         
         <div class="faq-item">
           <h3>How often is new analysis published?</h3>
-          <p>Daily tech briefings are published every morning at 9 AM EST, aggregating key developments from Hacker News, Techmeme, and Reuters. In-depth analysis articles on the US-China tech war, semiconductor policy, and AI strategy are published regularly.</p>
+          <p>Daily tech briefings launched February 9, 2026 — published every morning at 9 AM EST with real-time news from Hacker News, Techmeme, AP News, and Ars Technica. In-depth analysis articles on the US-China tech war, semiconductor policy, and AI strategy are published regularly.</p>
         </div>
       </div>
     </div>
@@ -143,6 +143,7 @@ const articles = allPosts
     <div class="analysis-container">
       <div class="section-header">
         <h2>Daily Tech Briefings</h2>
+        <p class="section-subtitle">Real-time analysis with verified sources — launched February 9, 2026</p>
         <a href="/blog" class="view-all">View All →</a>
       </div>
       
@@ -567,6 +568,7 @@ const articles = allPosts
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 48px;
   }
 
@@ -575,6 +577,15 @@ const articles = allPosts
     font-size: 36px;
     font-weight: 800;
     color: var(--color-text-primary);
+  }
+
+  .section-subtitle {
+    width: 100%;
+    font-size: 14px;
+    color: var(--color-text-tertiary);
+    margin-top: 4px;
+    margin-bottom: 0;
+    font-style: italic;
   }
 
   .view-all {

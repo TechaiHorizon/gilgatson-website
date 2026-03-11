@@ -776,3 +776,37 @@
 2026-03-10 09:05:25,256 [INFO] Saved briefing to /home/ubuntu/gilgatson-website-repo/src/pages/blog/daily-briefing-2026-03-10.md
 2026-03-10 09:05:25,256 [INFO] SEO Description: Google DeepMind's Jeff Dean departs with 30+ staff; Meta alerts EU advertisers on new location fees; OpenAI halts Stargate data center expansion plans.
 2026-03-10 09:05:25,256 [INFO] Step 5: Committing and pushing to GitHub...
+2026-03-11 09:03:23,543 [INFO] ============================================================
+2026-03-11 09:03:23,543 [INFO] Gil Gatson Daily Tech Briefing Generator (Live News)
+2026-03-11 09:03:23,543 [INFO] ============================================================
+2026-03-11 09:03:23,543 [INFO] Generating briefing for March 11, 2026
+2026-03-11 09:03:23,543 [INFO] Step 1: Fetching real news from live sources...
+2026-03-11 09:03:23,543 [INFO] Fetching from Hacker News API...
+2026-03-11 09:03:30,845 [INFO]   Hacker News: 25 relevant stories found
+2026-03-11 09:03:30,847 [INFO] Fetching from Techmeme...
+2026-03-11 09:03:31,979 [INFO]   Techmeme: 49 relevant stories found
+2026-03-11 09:03:31,980 [INFO] Fetching from AP News...
+2026-03-11 09:03:33,306 [INFO]   AP News: 94 relevant stories found
+2026-03-11 09:03:33,308 [INFO] Fetching from Ars Technica...
+2026-03-11 09:03:34,191 [INFO]   Ars Technica: 16 relevant stories found
+2026-03-11 09:03:34,194 [INFO] Total unique relevant stories: 121
+2026-03-11 09:03:34,194 [INFO] Top stories for today's briefing:
+2026-03-11 09:03:34,194 [INFO]   1. [Techmeme] Filing: Microsoft files an amicus brief in support of Anthropic and advocates fo
+2026-03-11 09:03:34,194 [INFO]   2. [Techmeme] A profile of Sachin Katti, who joined OpenAI from Intel in November 2025 as its 
+2026-03-11 09:03:34,194 [INFO]   3. [Techmeme] Amsterdam-based Nebius says Nvidia plans to invest $2B in the startup as it plan
+2026-03-11 09:03:34,194 [INFO]   4. [Hacker News] Intel Demos Chip to Compute with Encrypted Data
+2026-03-11 09:03:34,194 [INFO]   5. [Techmeme] Chinese Gen Z day traders, who prefer tech stocks and increasingly use AI chatbo
+2026-03-11 09:03:34,194 [INFO]   6. [Techmeme] Indian AI lab Lossfunk's prompting method lets LLMs generate Tulu language text 
+2026-03-11 09:03:34,194 [INFO] Step 2: Generating SEO metadata...
+2026-03-11 09:03:37,030 [INFO] HTTP Request: POST https://api.manus.im/api/llm-proxy/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-11 09:03:37,040 [INFO] Step 3: Generating Gil Gatson's analysis...
+2026-03-11 09:03:52,503 [INFO] HTTP Request: POST https://api.manus.im/api/llm-proxy/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-11 09:03:52,505 [INFO] Step 4: Saving briefing...
+2026-03-11 09:03:52,505 [INFO] Saved briefing to /home/ubuntu/gilgatson-website-repo/src/pages/blog/daily-briefing-2026-03-11.md
+2026-03-11 09:03:52,505 [INFO] SEO Description: Microsoft supports Anthro with an amicus brief; Sachin Katti joins OpenAI from Intel; Nvidia plans a $2B investment in Amsterdam-based Nebius, highlighting major AI and tech moves.
+2026-03-11 09:03:52,505 [INFO] Step 5: Committing and pushing to GitHub...
+2026-03-11 09:03:52,659 [INFO] Changes pushed to GitHub
+2026-03-11 09:03:52,659 [INFO] ============================================================
+2026-03-11 09:03:52,659 [INFO] Daily briefing published successfully!
+2026-03-11 09:03:52,659 [INFO] View at: https://gilgatson.com/blog/daily-briefing-2026-03-11
+2026-03-11 09:03:52,659 [INFO] ============================================================

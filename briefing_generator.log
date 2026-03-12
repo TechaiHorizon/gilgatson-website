@@ -810,3 +810,32 @@
 2026-03-11 09:03:52,659 [INFO] Daily briefing published successfully!
 2026-03-11 09:03:52,659 [INFO] View at: https://gilgatson.com/blog/daily-briefing-2026-03-11
 2026-03-11 09:03:52,659 [INFO] ============================================================
+2026-03-12 09:02:11,299 [INFO] ============================================================
+2026-03-12 09:02:11,299 [INFO] Gil Gatson Daily Tech Briefing Generator (Live News)
+2026-03-12 09:02:11,299 [INFO] ============================================================
+2026-03-12 09:02:11,299 [INFO] Generating briefing for March 12, 2026
+2026-03-12 09:02:11,299 [INFO] Step 1: Fetching real news from live sources...
+2026-03-12 09:02:11,299 [INFO] Fetching from Hacker News API...
+2026-03-12 09:02:18,826 [INFO]   Hacker News: 24 relevant stories found
+2026-03-12 09:02:18,828 [INFO] Fetching from Techmeme...
+2026-03-12 09:02:19,625 [INFO]   Techmeme: 46 relevant stories found
+2026-03-12 09:02:19,626 [INFO] Fetching from AP News...
+2026-03-12 09:02:20,215 [INFO]   AP News: 77 relevant stories found
+2026-03-12 09:02:20,217 [INFO] Fetching from Ars Technica...
+2026-03-12 09:02:20,436 [INFO]   Ars Technica: 22 relevant stories found
+2026-03-12 09:02:20,439 [INFO] Total unique relevant stories: 117
+2026-03-12 09:02:20,440 [INFO] Top stories for today's briefing:
+2026-03-12 09:02:20,440 [INFO]   1. [Techmeme] Microsoft is pushing for more Africans to adopt its AI tools as it competes with
+2026-03-12 09:02:20,440 [INFO]   2. [Techmeme] Microsoft and Meta each committed nearly $50B in additional data center leases i
+2026-03-12 09:02:20,440 [INFO]   3. [Techmeme] Microsoft says the next Xbox, Project Helix, will have a custom AMD chip, and it
+2026-03-12 09:02:20,440 [INFO]   4. [Techmeme] Sources: Cursor is in early talks to raise billions in a new funding round at a 
+2026-03-12 09:02:20,440 [INFO]   5. [Techmeme] Google spins off GFiber, formerly Google Fiber, forming an independent provider 
+2026-03-12 09:02:20,440 [INFO]   6. [AP News] Microsoft and retired military chiefs back AI company Anthropic in court fight a
+2026-03-12 09:02:20,440 [INFO] Step 2: Generating SEO metadata...
+2026-03-12 09:02:23,139 [INFO] HTTP Request: POST https://api.manus.im/api/llm-proxy/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-12 09:02:23,146 [INFO] Step 3: Generating Gil Gatson's analysis...
+2026-03-12 09:02:39,287 [INFO] HTTP Request: POST https://api.manus.im/api/llm-proxy/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-12 09:02:39,288 [INFO] Step 4: Saving briefing...
+2026-03-12 09:02:39,288 [INFO] Saved briefing to /home/ubuntu/gilgatson-website-repo/src/pages/blog/daily-briefing-2026-03-12.md
+2026-03-12 09:02:39,288 [INFO] SEO Description: Microsoft drives AI adoption in Africa, commits nearly $50B alongside Meta, and reveals Project Helix as the next Xbox with custom features.
+2026-03-12 09:02:39,289 [INFO] Step 5: Committing and pushing to GitHub...
